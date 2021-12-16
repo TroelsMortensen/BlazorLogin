@@ -1,0 +1,29 @@
+﻿@using BlazorLoginApp.Authentication
+@inject NavigationManager navMgr
+@inject IAuthService authService
+
+<div>
+    <AuthorizeView>
+        <Authorized>
+            <img/>
+        </Authorized>
+        <NotAuthorized>
+            <img/>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
+
+@code {
+
+    private void Login()
+    {
+        navMgr.NavigateTo("/Login");
+    }
+
+    private async Task Logout()
+    {
+        await authService.LogoutAsync();
+        navMgr.NavigateTo("/");
+    }
+
+}

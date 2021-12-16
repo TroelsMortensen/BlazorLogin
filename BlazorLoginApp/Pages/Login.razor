@@ -12,8 +12,8 @@
                 <input type="text" @bind="userName"/>
             </div>
             <div class="field">
-                <label style="text-align: center">User name:</label>
-                <input type="text" @bind="password"/>
+                <label style="text-align: center">Password:</label>
+                <input type="password" @bind="password"/>
             </div>
             @if (!string.IsNullOrEmpty(errorLabel))
             {
@@ -32,14 +32,6 @@
         <div class="card">
             <h3>Hello, @context.User.Identity.Name</h3>
         </div>
-        @if (!string.IsNullOrEmpty(errorLabel))
-        {
-            <div class="field">
-                <label style="color: red">
-                    @errorLabel
-                </label>
-            </div>
-        }
     </Authorized>
 </AuthorizeView>
 
@@ -50,6 +42,7 @@
 
     private async Task LoginAsync()
     {
+        errorLabel = "";
         try
         {
             await authService.LoginAsync(userName, password);

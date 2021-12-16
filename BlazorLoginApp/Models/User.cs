@@ -2,14 +2,14 @@
 
 public class User
 {
-    public string Name { get; private set; }
+    public string Name { get;  set; }
 
-    public string Password { get; private set; }
+    public string Password { get;  set; }
 
-    public string Role { get; private set; }
+    public string Role { get;  set; }
 
-    public int SecurityLevel { get; private set; }
-    public int BirthYear { get; private set; }
+    public int SecurityLevel { get;  set; }
+    public int BirthYear { get;  set; }
 
     public User(string name, string password, string role, int securityLevel, short birthYear)
     {
