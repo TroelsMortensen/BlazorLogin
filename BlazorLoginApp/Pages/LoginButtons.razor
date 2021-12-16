@@ -1,17 +1,16 @@
 ﻿@using BlazorLoginApp.Authentication
+@namespace Login
 @inject NavigationManager navMgr
 @inject IAuthService authService
 
-<div>
-    <AuthorizeView>
-        <Authorized>
-            <img/>
-        </Authorized>
-        <NotAuthorized>
-            <img/>
-        </NotAuthorized>
-    </AuthorizeView>
-</div>
+<AuthorizeView>
+    <Authorized>
+        <img class="icon" src="img/Logout.png" @onclick="Logout"/>
+    </Authorized>
+    <NotAuthorized>
+        <img class="icon" src="img/Login.png" @onclick="Login"/>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
 
