@@ -4,9 +4,9 @@ namespace BlazorLoginApp.Authentication;
 
 public interface IAuthService
 {
-    public Task LoginAsync(User user);
+    public Task LoginAsync(string username, string password);
     public Task LogoutAsync();
-    internal Task<ClaimsPrincipal> GetAuthAsync();
+    public Task<ClaimsPrincipal> GetAuthAsync();
 
-    internal Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
+    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
 }
