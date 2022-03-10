@@ -20,35 +20,38 @@ public class AuthServiceImpl : IAuthService
 
     public async Task LoginAsync(string username, string password)
     {
-        User? user = await userService.GetUserAsync(username);
+        User? user = await userService.GetUserAsync(username); // Get user from database
 
-        ValidateLoginCredentials(password, user);
+        ValidateLoginCredentials(password, user); // Validate input data against data from database
+        // validation success
+        await CacheUserAsync(user); // Cache the user object in the browser 
 
-        await CacheUserAsync(user);
+        ClaimsPrincipal principal = CreateClaimsPrincipal(user); // convert user object to ClaimsPrincipal
 
-        ClaimsPrincipal principal = CreateClaimsPrincipal(user);
-
-        OnAuthStateChanged?.Invoke(principal);
+        OnAuthStateChanged?.Invoke(principal); // notify interested classes in the change of authentication state
     }
 
     public async Task LogoutAsync()
     {
-        await ClearUserFromCacheAsync();
-        ClaimsPrincipal principal = CreateClaimsPrincipal(null);
-        OnAuthStateChanged?.Invoke(principal);
+        await ClearUserFromCacheAsync(); // remove the user object from browser cache
+        ClaimsPrincipal principal = CreateClaimsPrincipal(null); // create a new ClaimsPrincipal with nothing.
+        OnAuthStateChanged?.Invoke(principal); // notify about change in authentication state
     }
 
-    public async Task<ClaimsPrincipal> GetAuthAsync()
+    public async Task<ClaimsPrincipal> GetAuthAsync() // this method is called by the authentication framework, whenever user credentials are reguired
     {
-        string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
-        User? user = null;
-        if (!string.IsNullOrEmpty(userAsJson))
-        {
-            user = JsonSerializer.Deserialize<User>(userAsJson);
-        }
+        User? user =  await GetUserFromCacheAsync();
+
         ClaimsPrincipal principal = CreateClaimsPrincipal(user);
 
         return principal;
+    }
+
+    private async Task<User?> GetUserFromCacheAsync()
+    {
+        string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        User? user = JsonSerializer.Deserialize<User>(userAsJson);
+        return user;
     }
 
     private static void ValidateLoginCredentials(string password, User? user)
@@ -90,6 +93,7 @@ public class AuthServiceImpl : IAuthService
 
     private static ClaimsIdentity ConvertUserToClaimsIdentity(User user)
     {
+        // here we take the information of the User object and convert to Claims
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.Name),
