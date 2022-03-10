@@ -8,7 +8,7 @@ namespace BlazorLoginApp.Authentication;
 
 public class AuthServiceImpl : IAuthService
 {
-    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
+    public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!; // assigning to null! to suppress null warning.
     private readonly IUserService userService;
     private readonly IJSRuntime jsRuntime;
 
