@@ -4,10 +4,10 @@ namespace BlazorLoginApp.Services.Impls;
 
 public class InMemoryUserService : IUserService
 {
-    public async Task<User?> GetUserAsync(string username)
+    public Task<User?> GetUserAsync(string username)
     {
         User? find = users.Find(user => user.Name.Equals(username));
-        return find;
+        return Task.FromResult(find);
     }
 
     private List<User> users = new()
