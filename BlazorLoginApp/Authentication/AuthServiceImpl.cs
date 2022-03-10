@@ -51,7 +51,7 @@ public class AuthServiceImpl : IAuthService
         return principal;
     }
 
-    private void ValidateLoginCredentials(string password, User? user)
+    private static void ValidateLoginCredentials(string password, User? user)
     {
         if (user == null)
         {
