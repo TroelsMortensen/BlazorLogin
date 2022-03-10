@@ -13,9 +13,10 @@ public class SimpleAuthenticationStateProvider : AuthenticationStateProvider
         authService.OnAuthStateChanged += AuthStateChanged;
     }
 
+    // This method is called by Blazor framework whenever authentication or authorization needs to be evaluated.
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        ClaimsPrincipal principal = await authService.GetAuthAsync();
+        ClaimsPrincipal principal = await authService.GetAuthAsync(); // get the user-as-ClaimsPrincipal from IAuthService
         return await Task.FromResult(new AuthenticationState(principal));
     }
 
