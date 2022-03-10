@@ -58,7 +58,7 @@ public class AuthServiceImpl : IAuthService
             throw new Exception("Username not found");
         }
 
-        if (!password.Equals(user.Password))
+        if (!string.Equals(password,user.Password))
         {
             throw new Exception("Password incorrect");
         }
