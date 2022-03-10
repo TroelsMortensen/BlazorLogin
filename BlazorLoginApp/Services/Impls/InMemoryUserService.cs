@@ -2,6 +2,7 @@
 
 namespace BlazorLoginApp.Services.Impls;
 
+// dummy database 
 public class InMemoryUserService : IUserService
 {
     public Task<User?> GetUserAsync(string username)
