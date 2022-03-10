@@ -88,7 +88,7 @@ public class AuthServiceImpl : IAuthService
         await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", "");
     }
 
-    private ClaimsIdentity ConvertUserToClaimsIdentity(User user)
+    private static ClaimsIdentity ConvertUserToClaimsIdentity(User user)
     {
         List<Claim> claims = new()
         {
