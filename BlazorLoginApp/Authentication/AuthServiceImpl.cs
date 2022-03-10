@@ -94,6 +94,7 @@ public class AuthServiceImpl : IAuthService
     private static ClaimsIdentity ConvertUserToClaimsIdentity(User user)
     {
         // here we take the information of the User object and convert to Claims
+        // this is (probably) the only method, which needs modifying for your own user type
         List<Claim> claims = new()
         {
             new Claim(ClaimTypes.Name, user.Name),
