@@ -24,7 +24,7 @@ public class AuthServiceImpl : IAuthService
 
         ValidateLoginCredentials(password, user); // Validate input data against data from database
         // validation success
-        await CacheUserAsync(user); // Cache the user object in the browser 
+        await CacheUserAsync(user!); // Cache the user object in the browser 
 
         ClaimsPrincipal principal = CreateClaimsPrincipal(user); // convert user object to ClaimsPrincipal
 
@@ -51,7 +51,7 @@ public class AuthServiceImpl : IAuthService
     {
         string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         if (string.IsNullOrEmpty(userAsJson)) return null;
-        User? user = JsonSerializer.Deserialize<User>(userAsJson);
+        User user = JsonSerializer.Deserialize<User>(userAsJson)!;
         return user;
     }
 
@@ -79,7 +79,7 @@ public class AuthServiceImpl : IAuthService
         return new ClaimsPrincipal();
     }
 
-    private async Task CacheUserAsync(User? user)
+    private async Task CacheUserAsync(User user)
     {
         string serialisedData = JsonSerializer.Serialize(user);
         await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
