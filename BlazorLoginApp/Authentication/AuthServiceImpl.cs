@@ -50,6 +50,7 @@ public class AuthServiceImpl : IAuthService
     private async Task<User?> GetUserFromCacheAsync()
     {
         string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (string.IsNullOrEmpty(userAsJson)) return null;
         User? user = JsonSerializer.Deserialize<User>(userAsJson);
         return user;
     }
@@ -69,15 +70,13 @@ public class AuthServiceImpl : IAuthService
 
     private static ClaimsPrincipal CreateClaimsPrincipal(User? user)
     {
-        ClaimsIdentity identity = new();
         if (user != null)
         {
-            identity = ConvertUserToClaimsIdentity(user);
+            ClaimsIdentity identity = ConvertUserToClaimsIdentity(user);
+            return new ClaimsPrincipal(identity);
         }
 
-        ClaimsPrincipal principal = new(identity);
-
-        return principal;
+        return new ClaimsPrincipal();
     }
 
     private async Task CacheUserAsync(User? user)
