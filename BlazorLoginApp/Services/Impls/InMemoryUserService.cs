@@ -13,8 +13,11 @@ public class InMemoryUserService : IUserService
 
     private List<User> users = new()
     {
-        new User("Troels", "Troels1234", "Teacher", 3, 1986),
-        new User("Maria", "oneTwo3FOUR", "Student", 2, 2001),
-        new User("Anne", "password", "HeadOfDepartment", 5, 1975)        
+        new User
+        {
+            Name = "Troels", Password = "Troels1234", Role = "Teacher", SecurityLevel = 3, BirthYear = 1986, Domain = "via"
+        },
+        new User { Name = "Maria", Password = "oneTwo3FOUR", Role = "Student", SecurityLevel = 1, BirthYear = 2001, Domain = "google" },
+        new User { Name = "Anne", Password = "password", Role = "HeadOfDepartment", SecurityLevel = 5, BirthYear = 1975, Domain = "via" }
     };
 }
