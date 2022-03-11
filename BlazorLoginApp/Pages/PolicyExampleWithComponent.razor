@@ -1,16 +1,21 @@
 ﻿@page "/PolicyExample1"
 
 <h3>PolicyExample</h3>
+
 <div>Domain:</div>
+
 <AuthorizeView Policy="MustBeVia">
     <p>This piece of text is only visible, if your domain is VIA</p>
 </AuthorizeView>
+
 <br/>
+
 <div>Security level:</div>
+
 <AuthorizeView>
     @context.User.Claims.First(c => c.Type.Equals("SecurityLevel")).Value
 </AuthorizeView>
 
 @code {
-    
+
 }
