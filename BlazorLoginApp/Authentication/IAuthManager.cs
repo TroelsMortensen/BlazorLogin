@@ -2,7 +2,7 @@
 
 namespace BlazorLoginApp.Authentication;
 
-public interface IAuthService
+public interface IAuthManager
 {
     public Task LoginAsync(string username, string password);
     public Task LogoutAsync();

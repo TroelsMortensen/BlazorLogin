@@ -1,7 +1,7 @@
 ﻿@using BlazorLoginApp.Authentication
 @namespace Login
 @inject NavigationManager navMgr
-@inject IAuthService authService
+@inject IAuthManager authManager
 
 <AuthorizeView>
     <Authorized>
@@ -21,7 +21,7 @@
 
     private async Task Logout()
     {
-        await authService.LogoutAsync();
+        await authManager.LogoutAsync();
         navMgr.NavigateTo("/");
     }
 

@@ -5,18 +5,18 @@ namespace BlazorLoginApp.Authentication;
 
 public class SimpleAuthenticationStateProvider : AuthenticationStateProvider
 {
-    private readonly IAuthService authService;
+    private readonly IAuthManager authManager;
 
-    public SimpleAuthenticationStateProvider(IAuthService authService)
+    public SimpleAuthenticationStateProvider(IAuthManager authManager)
     {
-        this.authService = authService;
-        authService.OnAuthStateChanged += AuthStateChanged;
+        this.authManager = authManager;
+        authManager.OnAuthStateChanged += AuthStateChanged;
     }
 
     // This method is called by Blazor framework whenever authentication or authorization needs to be evaluated.
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        ClaimsPrincipal principal = await authService.GetAuthAsync(); // get the user-as-ClaimsPrincipal from IAuthService
+        ClaimsPrincipal principal = await authManager.GetAuthAsync(); // get the user-as-ClaimsPrincipal from IAuthService
         return await Task.FromResult(new AuthenticationState(principal));
     }
 

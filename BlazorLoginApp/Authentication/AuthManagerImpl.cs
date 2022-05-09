@@ -6,13 +6,13 @@ using Microsoft.JSInterop;
 
 namespace BlazorLoginApp.Authentication;
 
-public class AuthServiceImpl : IAuthService
+public class AuthManagerImpl : IAuthManager
 {
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!; // assigning to null! to suppress null warning.
     private readonly IUserService userService;
     private readonly IJSRuntime jsRuntime;
 
-    public AuthServiceImpl(IUserService userService, IJSRuntime jsRuntime)
+    public AuthManagerImpl(IUserService userService, IJSRuntime jsRuntime)
     {
         this.userService = userService;
         this.jsRuntime = jsRuntime;

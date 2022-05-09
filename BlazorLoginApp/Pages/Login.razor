@@ -1,6 +1,6 @@
 ﻿@page "/Login"
 @using BlazorLoginApp.Authentication
-@inject IAuthService authService
+@inject IAuthManager authManager
 @inject NavigationManager navMgr
 
 <AuthorizeView>
@@ -45,7 +45,7 @@
         errorLabel = "";
         try
         {
-            await authService.LoginAsync(userName, password);
+            await authManager.LoginAsync(userName, password);
             navMgr.NavigateTo("/");
         }
         catch (Exception e)
